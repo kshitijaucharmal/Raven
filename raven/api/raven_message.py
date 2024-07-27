@@ -118,7 +118,6 @@ def save_message(message_id, add=False):
 
 	return "message saved"
 
-
 @frappe.whitelist()
 def get_saved_messages():
 	"""
@@ -141,8 +140,7 @@ def get_saved_messages():
 			raven_message.owner,
 			raven_message.creation,
 			raven_message.text,
-			raven_message.channel_id,
-			raven_message.file,
+			raven_message.channel_id, raven_message.file,
 			raven_message.message_type,
 			raven_message.message_reactions,
 			raven_message._liked_by,

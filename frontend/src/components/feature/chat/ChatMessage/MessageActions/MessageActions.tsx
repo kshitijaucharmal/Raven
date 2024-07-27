@@ -9,7 +9,7 @@ import { RetractVote } from './RetractVote'
 import { toast } from 'sonner'
 import { getErrorMessage } from '@/components/layout/AlertBanner/ErrorBanner'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { LuForward, LuReply } from 'react-icons/lu'
+import { LuForward, LuReply, LuPin } from 'react-icons/lu'
 
 export interface MessageContextMenuProps {
     message?: Message | null,
@@ -38,6 +38,7 @@ export const MessageContextMenu = ({ message, onDelete, onEdit, onReply, onForwa
                         Reply
                     </Flex>
                 </ContextMenu.Item>
+                <PinMessageAction message={message} />
                 <ContextMenu.Item onClick={onForward}>
                     <Flex gap='2'>
                         <LuForward size='18' />
@@ -157,6 +158,41 @@ const SaveMessageAction = ({ message }: { message: Message }) => {
             {isSaved && <BiBookmarkMinus size='18' />}
             {!isSaved ? "Save" : "Unsave"} message
 
+        </Flex>
+    </ContextMenu.Item>
+
+
+}
+
+const PinMessageAction = ({ message }: { message: Message }) => {
+
+    const { currentUser } = useContext(UserContext)
+    const isSaved = JSON.parse(message._liked_by ?? '[]').includes(currentUser)
+
+    const { call } = useContext(FrappeContext) as FrappeConfig
+
+    const handleLike = () => {
+        call.post('raven.api.raven_message.pin_message', {
+            // doctype: 'Raven Message',
+            message_id: message.name,
+            add: isSaved ? 'No' : 'Yes'
+        }).then(() => {
+            if (isSaved) {
+                toast('Message UnPinned')
+            } else {
+                toast.success('Message Pinned')
+            }
+        })
+            .catch((e) => { toast.error('Could not perform the action', {
+                    description: getErrorMessage(e)
+                })
+            })
+    }
+
+    return <ContextMenu.Item onClick={handleLike}>
+        <Flex gap='2'>
+            <LuPin size='18' />
+            Pin
         </Flex>
     </ContextMenu.Item>
 
