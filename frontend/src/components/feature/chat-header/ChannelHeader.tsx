@@ -1,4 +1,5 @@
 import { PageHeader } from "@/components/layout/Heading/PageHeader"
+import { PinnedMessagesHeader } from "@/components/layout/Heading/PinnedMessagesHeader"
 import { ChannelIcon } from "@/utils/layout/channelIcon"
 import { ChannelListItem } from "@/utils/channel/ChannelListProvider"
 import { EditChannelNameButton } from "../channel-details/rename-channel/EditChannelNameButton"
@@ -7,6 +8,7 @@ import ChannelHeaderMenu from "./ChannelHeaderMenu"
 import { ViewChannelMemberAvatars } from "./ViewChannelMemberAvatars"
 import { BiChevronLeft } from "react-icons/bi"
 import { Link } from "react-router-dom"
+import { LuPin } from "react-icons/lu"
 
 interface ChannelHeaderProps {
     channelData: ChannelListItem
@@ -17,6 +19,7 @@ export const ChannelHeader = ({ channelData }: ChannelHeaderProps) => {
     // The channel header has the channel name, the channel type icon, edit channel name button, and the view or add members button
 
     return (
+        <>
         <PageHeader>
             <Flex align='center'>
                 <Link to='/channel' className="block bg-transparent hover:bg-transparent active:bg-transparent sm:hidden">
@@ -36,5 +39,12 @@ export const ChannelHeader = ({ channelData }: ChannelHeaderProps) => {
                 <ChannelHeaderMenu channelData={channelData} />
             </Flex>
         </PageHeader>
+        <PinnedMessagesHeader>
+            <Flex direction="row" align="center" className="animate-fadein" gap='2'>
+                <LuPin size="18" ></LuPin>
+                Pinned Messages
+            </Flex>
+        </PinnedMessagesHeader>
+        </>
     )
 }

@@ -167,7 +167,7 @@ const SaveMessageAction = ({ message }: { message: Message }) => {
 const PinMessageAction = ({ message }: { message: Message }) => {
 
     const { currentUser } = useContext(UserContext)
-    const isSaved = JSON.parse(message._liked_by ?? '[]').includes(currentUser)
+    const isPinned = message.is_pinned;
 
     const { call } = useContext(FrappeContext) as FrappeConfig
 
@@ -175,9 +175,9 @@ const PinMessageAction = ({ message }: { message: Message }) => {
         call.post('raven.api.raven_message.pin_message', {
             // doctype: 'Raven Message',
             message_id: message.name,
-            add: isSaved ? 'No' : 'Yes'
+            add: isPinned ? 'No' : 'Yes'
         }).then(() => {
-            if (isSaved) {
+            if (isPinned) {
                 toast('Message UnPinned')
             } else {
                 toast.success('Message Pinned')

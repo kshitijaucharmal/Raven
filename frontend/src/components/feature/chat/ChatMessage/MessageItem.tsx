@@ -170,7 +170,6 @@ export const MessageItem = ({ message, setDeleteMessage, isHighlighted, onReplyM
                                 onDelete={onDelete}
                                 onEdit={onEdit}
                                 onReply={onReply}
-                                onPin={onPin}
                                 onForward={onForward}
                             />
                         }
@@ -183,7 +182,6 @@ export const MessageItem = ({ message, setDeleteMessage, isHighlighted, onReplyM
                     onDelete={onDelete}
                     onEdit={onEdit}
                     onReply={onReply}
-                    onPin={onPin}
                     onForward={onForward}
                 />
             </ContextMenu.Root>
