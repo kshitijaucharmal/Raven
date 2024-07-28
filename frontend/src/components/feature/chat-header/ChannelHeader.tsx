@@ -9,6 +9,8 @@ import { ViewChannelMemberAvatars } from "./ViewChannelMemberAvatars"
 import { BiChevronLeft } from "react-icons/bi"
 import { Link } from "react-router-dom"
 import { LuPin } from "react-icons/lu"
+import { useFrappeGetCall } from "frappe-react-sdk"
+import { PinnedMessages } from "@/types/RavenChannelManagement/PinnedMessages"
 
 interface ChannelHeaderProps {
     channelData: ChannelListItem
@@ -17,6 +19,9 @@ interface ChannelHeaderProps {
 export const ChannelHeader = ({ channelData }: ChannelHeaderProps) => {
 
     // The channel header has the channel name, the channel type icon, edit channel name button, and the view or add members button
+    const { data, error } = useFrappeGetCall<{ message: PinnedMessages[] }>("raven.api.raven_message.get_pinned_messages", undefined, undefined, {
+        revalidateOnFocus: false
+    })
 
     return (
         <>
@@ -43,6 +48,7 @@ export const ChannelHeader = ({ channelData }: ChannelHeaderProps) => {
             <Flex direction="row" align="center" className="animate-fadein" gap='2'>
                 <LuPin size="18" ></LuPin>
                 Pinned Messages
+                {/* { data?.message?.map((msg) => {return(<p>msg</p>)}) } */}
             </Flex>
         </PinnedMessagesHeader>
         </>

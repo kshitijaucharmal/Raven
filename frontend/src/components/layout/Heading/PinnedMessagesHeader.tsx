@@ -5,7 +5,7 @@ export const PinnedMessagesHeader = ({ children }: PropsWithChildren) => {
     return (
         <header className='dark:bg-gray-2 bg-white fixed top-0' style={{
             // For testing
-            zIndex: 1000
+            zIndex: 900
         }}>
             <Box
                 py='3'
